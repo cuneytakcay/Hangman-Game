@@ -1,0 +1,39 @@
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column; 
+}
+
+.content {
+	flex: 1 0 auto;
+}
+
+.header {
+	border-bottom: 1px solid #c69e13;
+}
+
+.footer {
+	border-top: 4px solid #c69e13;
+}
+
+p {
+	font-size: 25px;
+}
+
+#word {
+	border: 1px solid #c69e13;
+	border-radius: 15px;
+}
+
+@media screen and (max-width: 768px) {
+	
+	#left-image {
+		display: none;
+	}
+	
+	p {
+		font-size: 20px;
+	}
+
+}
+

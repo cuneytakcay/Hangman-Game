@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hangman Game</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<script type="text/javascript" src="assets/javascript/game.js"></script>
+</head>
+<body>
+	<div class="container-fluid text-info content">
+
+		<!-- HEADER -->
+		<div class="row header">
+			<div class="col-12 text-center">
+				<img src="assets/images/hangman-logo-tr.png" class="mw-100">
+			</div>
+		</div>
+
+		<!-- NEW GAME BUTTON -->
+		<div class="row">
+			<div class="col-12 text-center pt-4 pb-2">
+				<button type="button" class="btn btn-info btn-lg" id="btnStart">Start new game</button>
+			</div>
+		</div>
+
+		<!-- GAME AREA -->
+		<div class="row">
+
+			<!-- LEFT SECTION -->
+			<div class="col-12 col-md-3 text-center pl-4 pr-0" id="image-spot">
+				<img src="assets/images/hangman0.png" id="left-image" class="mw-100">
+			</div>
+
+			<!-- CENTER SECTION -->
+			<div class="col-12 col-sm-6 col-md-6 text-center pt-3">
+				<div class="row">
+					<div class="col-12">
+						<h4>Wins</h4>
+						<p id="wins" class="text-success">-</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<h4>Current Word</h4>
+						<p class="text-secondary p-3" id="word">Press "Start" to play.</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<h4>Remaining Guesses</h4>
+						<p id="guesses" class="text-danger">-</p>
+					</div>
+				</div>
+			</div>
+			
+			<!-- RIGHT SECTION -->
+			<div class="col-12 col-sm-6 col-md-3 text-center pt-3">
+				<h4>Used Letters</h4><hr>
+				<p class="text-danger" id="used-letters">.......</p><br>
+				<p class="text-warning" id="letter-repeat"></p>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="footer bg-dark h-100 pt-3 text-center text-secondary">
+		<p style="font-size: 15px;">&copy;Copyright 2017 Cuneyt Akcay</p>
+	</div>
+</body>
+</html>
