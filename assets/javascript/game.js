@@ -27,7 +27,6 @@ window.onload = function() {
 			rand =(Math.floor(Math.random() * (scienceWords.length)) + 1) - 1;
 			currentWord = scienceWords[rand].toLowerCase();
 			document.getElementById("word").innerHTML = "";
-			scienceWords.splice(rand, 1);
 
 			for (var i = 0; i < currentWord.length; i++) {
 
@@ -69,6 +68,7 @@ window.onload = function() {
 					if (unknownWord.join("").includes(currentWord)) {
 						document.getElementById("word").innerHTML = "Congratulations!";
 						document.getElementById("mesage-space").innerHTML = "You got " + currentWord.toUpperCase() + " right.";
+						scienceWords.splice(rand, 1);
 						placeImg("assets/images/hangman-dab.png");
 						document.getElementById("wins").innerHTML = ++wins;
 						gameStarted = false;
@@ -88,6 +88,7 @@ window.onload = function() {
 
 					if (guesses == 0) {
 						document.getElementById("word").innerHTML = "Sorry, you missed " + currentWord.toUpperCase() + "!";
+						scienceWords.splice(rand, 1);
 						document.getElementById("mesage-space").innerHTML = "Press \"Start\" to try again.";
 						gameStarted = false;	
 					}
@@ -114,7 +115,7 @@ window.onload = function() {
     function placeImg(hangmanImg) {
     	var image = document.createElement("img");
     	image.setAttribute("src", hangmanImg);
-    	image.setAttribute("class", "mw-100");
+    	image.setAttribute("class", "w-75");
     	image.setAttribute("id", "left-image");
     	document.getElementById("image-space").innerHTML = "";
     	document.getElementById("image-space").appendChild(image);
