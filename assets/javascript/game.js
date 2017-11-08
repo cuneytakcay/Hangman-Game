@@ -1,10 +1,11 @@
 window.onload = function() {
 
-	// Declare an array with a list of scientific words in it.
-	var images = ["hangman6.png", "hangman5.png", "hangman4.png", "hangman3.png", "hangman2.png", "hangman1.png", "hangman0.png"]
-	var words = ["beaker", "experiment", "einstein"];
+	// Declare all variables and an array with a list of scientific words in it.
+	var scienceWords = ["beaker", "experiment", "einstein", "quantum", "electron", "relativity", "neutron", "atom", "distillation", "avagadro"];
+	var images = ["hangman-01.png", "hangman-02.png", "hangman-03.png", "hangman-04.png", "hangman-05.png", 
+					"hangman-06.png", "hangman-07.png", "hangman-08.png", "hangman-09.png", "hangman-10.png"];
 	var wins = 0;
-	var rnd, currentWord, letterSelection, guesses, unknownWord, image;
+	var rand, currentWord, letterSelection, guesses, unknownWord;
 	var usedLetters = "";
 	var gameStarted = false;
 
@@ -14,18 +15,19 @@ window.onload = function() {
 	document.getElementById("btnStart").onclick = function () {
 		gameStarted = true;
 		unknownWord = [];
-		document.getElementById("used-letters").innerHTML = ".......";
-		placeImg("assets/images/" + images[6]);
+		usedLetters = "";
+		guesses = 10;
+		document.getElementById("used-letters").innerHTML = "-";
+		document.getElementById("mesage-space").innerHTML = "";
+		placeImg("assets/images/hangman-11.png");
 		document.getElementById("wins").innerHTML = wins;
-		guesses = 6;
 		document.getElementById("guesses").innerHTML = guesses;
 
-		if(words.length > 0) {
-			rnd =(Math.floor(Math.random() * (words.length)) + 1) - 1;
-			currentWord = words[rnd].toLowerCase();
-			console.log(currentWord);// Delete this later!
+		if(scienceWords.length > 0) {
+			rand =(Math.floor(Math.random() * (scienceWords.length)) + 1) - 1;
+			currentWord = scienceWords[rand].toLowerCase();
 			document.getElementById("word").innerHTML = "";
-			words.splice(rnd, 1);
+			scienceWords.splice(rand, 1);
 
 			for (var i = 0; i < currentWord.length; i++) {
 
@@ -49,23 +51,29 @@ window.onload = function() {
 		if(gameStarted) {
 
 			if (event.which <= 90 && event.which >= 65) {
-				letterSelection = event.key;
-				document.getElementById("letter-repeat").innerHTML = "";
+				letterSelection = event.key.toLowerCase();
+				document.getElementById("mesage-space").innerHTML = "";
 
-				if (currentWord.includes(letterSelection.toLowerCase())) {
+				if (unknownWord.join("").includes(letterSelection)) {
+						document.getElementById("mesage-space").innerHTML = "This letter already was used!";
+					}
+
+				if (currentWord.includes(letterSelection)) {
 					for (var i = 0; i < currentWord.length; i++) {
-						if (currentWord[i] === (letterSelection.toLowerCase())) {
+						if (currentWord[i] === letterSelection) {
 							unknownWord[i] = letterSelection;
-							document.getElementById("word").innerHTML = unknownWord.join("");
+							document.getElementById("word").innerHTML = " " + unknownWord.join("") + " ";
 						}
 					}
 
 					if (unknownWord.join("").includes(currentWord)) {
 						document.getElementById("word").innerHTML = "Congratulations!";
-						placeImg("assets/images/" + images[6]);
+						document.getElementById("mesage-space").innerHTML = "You got " + currentWord.toUpperCase() + " right.";
+						placeImg("assets/images/hangman-dab.png");
 						document.getElementById("wins").innerHTML = ++wins;
 						gameStarted = false;
 					}
+
 
 				} else {
 
@@ -75,26 +83,27 @@ window.onload = function() {
 						document.getElementById("guesses").innerHTML = --guesses;
 						placeImg("assets/images/" + images[guesses]);
 					} else {
-						// repeating a letter from the current word does not give a warning message!!!
-						document.getElementById("letter-repeat").innerHTML = "This letter already was used!";
+						document.getElementById("mesage-space").innerHTML = "This letter already was used!";
 					}
 
 					if (guesses == 0) {
-						document.getElementById("word").innerHTML = "Press \"Start\" to try again.";
+						document.getElementById("word").innerHTML = "Sorry, you missed " + currentWord.toUpperCase() + "!";
+						document.getElementById("mesage-space").innerHTML = "Press \"Start\" to try again.";
 						gameStarted = false;	
 					}
 				}
 
 			} else {
 				event.preventDefault();
-				document.getElementById("letter-repeat").innerHTML = "Please press a proper key!";
+				document.getElementById("mesage-space").innerHTML = "Please press a proper key!";
 			}
 
 		} else {
 
-			if (words.length == 0) {
+			if (scienceWords.length == 0) {
 				document.getElementById("word").innerHTML = "No words left, please refresh the page to restart.";
 			} else {
+				event.preventDefault();
 				document.getElementById("word").innerHTML = "Press \"Start Button\" first.";
 			}
 			
@@ -103,11 +112,11 @@ window.onload = function() {
 
 	// Selects the right image and places it in the left of the viewport.
     function placeImg(hangmanImg) {
-      image = document.createElement("img");
-      image.setAttribute("src", hangmanImg);
-      image.setAttribute("class", "mw-100");
-      image.setAttribute("id", "left-image");
-      document.getElementById("image-spot").innerHTML = "";
-      document.getElementById("image-spot").appendChild(image);
+    	var image = document.createElement("img");
+    	image.setAttribute("src", hangmanImg);
+    	image.setAttribute("class", "mw-100");
+    	image.setAttribute("id", "left-image");
+    	document.getElementById("image-space").innerHTML = "";
+    	document.getElementById("image-space").appendChild(image);
     }
 }
