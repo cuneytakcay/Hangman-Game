@@ -22,14 +22,13 @@ window.onload = function() {
 		placeImg("assets/images/hangman-11.png");
 		document.getElementById("wins").innerHTML = wins;
 		document.getElementById("guesses").innerHTML = guesses;
-
+			
 		if(scienceWords.length > 0) {
-			rand =(Math.floor(Math.random() * (scienceWords.length)) + 1) - 1;
+			rand = Math.floor(Math.random() * scienceWords.length);
 			currentWord = scienceWords[rand].toLowerCase();
-			document.getElementById("word").innerHTML = "";
+    		document.getElementById("word").innerHTML = "";
 
 			for (var i = 0; i < currentWord.length; i++) {
-
 				unknownWord[i] = " _ ";			
 			}
 
@@ -54,6 +53,7 @@ window.onload = function() {
 				document.getElementById("mesage-space").innerHTML = "";
 
 				if (unknownWord.join("").includes(letterSelection)) {
+						playSound("sound-false.wav");
 						document.getElementById("mesage-space").innerHTML = "This letter already was used!";
 					}
 
@@ -61,12 +61,14 @@ window.onload = function() {
 					for (var i = 0; i < currentWord.length; i++) {
 						if (currentWord[i] === letterSelection) {
 							unknownWord[i] = letterSelection;
+							playSound("sound-true.wav");
 							document.getElementById("word").innerHTML = " " + unknownWord.join("") + " ";
 						}
 					}
 
 					if (unknownWord.join("").includes(currentWord)) {
 						document.getElementById("word").innerHTML = "Congratulations!";
+						playSound("sound-congrats.wav");
 						document.getElementById("mesage-space").innerHTML = "You got " + currentWord.toUpperCase() + " right.";
 						scienceWords.splice(rand, 1);
 						placeImg("assets/images/hangman-dab.png");
@@ -79,14 +81,19 @@ window.onload = function() {
 
 					if (!usedLetters.includes(letterSelection)) {
 						usedLetters = usedLetters + " " + letterSelection;
+						if (guesses > 1) {
+							playSound("sound-fail.wav");
+						}
 						document.getElementById("used-letters").innerHTML = usedLetters;
 						document.getElementById("guesses").innerHTML = --guesses;
 						placeImg("assets/images/" + images[guesses]);
 					} else {
+						playSound("sound-false.wav");
 						document.getElementById("mesage-space").innerHTML = "This letter already was used!";
 					}
 
 					if (guesses == 0) {
+						playSound("sound-lose.wav");
 						document.getElementById("word").innerHTML = "Sorry, you missed " + currentWord.toUpperCase() + "!";
 						scienceWords.splice(rand, 1);
 						document.getElementById("mesage-space").innerHTML = "Press \"Start\" to try again.";
@@ -96,6 +103,7 @@ window.onload = function() {
 
 			} else {
 				event.preventDefault();
+				playSound("sound-false.wav");
 				document.getElementById("mesage-space").innerHTML = "Please press a proper key!";
 			}
 
@@ -119,5 +127,10 @@ window.onload = function() {
     	image.setAttribute("id", "left-image");
     	document.getElementById("image-space").innerHTML = "";
     	document.getElementById("image-space").appendChild(image);
+    }
+
+    function playSound(soundFile) {
+    	var name = new Audio("assets/sounds/" + soundFile);
+		name.play();
     }
 }
